@@ -9,4 +9,6 @@ async function main() {
     });
 
 
+    const data = client.getWalletByAccountId("")
+
 }

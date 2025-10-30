@@ -612,6 +612,10 @@ export class CradleApiClient {
     return this.request<Asset>('GET', `/assets/${id}`);
   }
 
+  async getAssets(): Promise<ApiResponse<Array<Asset>>> {
+    return this.request<Array<Asset>>('GET', "/assets" );
+  }
+
   /**
    * Get asset by token identifier
    */
