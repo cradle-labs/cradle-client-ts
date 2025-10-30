@@ -598,7 +598,7 @@ export class CradleApiClient {
    * Get wallet by account ID
    */
   async getWalletByAccountId(accountId: string): Promise<ApiResponse<CradleWallet>> {
-    return this.request<CradleWallet>('GET', `/wallets/account/${accountId}`);
+    return this.request<CradleWallet>('GET', `/accounts/${accountId}/wallets`);
   }
 
   // ============================================================================
