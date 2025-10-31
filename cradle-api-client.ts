@@ -472,6 +472,7 @@ export class CradleApiClient {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${config.apiKey}`,
+        'ngrok-skip-browser-warning': '6969'
       },
     });
 
@@ -701,11 +702,10 @@ export class CradleApiClient {
     filters?: TimeSeriesFilters
   ): Promise<ApiResponse<TimeSeriesRecord[]>> {
     const params = new URLSearchParams();
-    if (filters?.market_id) params.append('market_id', filters.market_id);
+    if (filters?.market_id) params.append('market', filters.market_id);
     if (filters?.asset) params.append('asset', filters.asset);
     if (filters?.interval) params.append('interval', filters.interval);
-    if (filters?.start_time) params.append('start_time', filters.start_time);
-    if (filters?.end_time) params.append('end_time', filters.end_time);
+    if (filters?.start_time) params.append('duration_sec', '');
     if (filters?.data_provider) params.append('data_provider', filters.data_provider);
 
     const query = params.toString();
