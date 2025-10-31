@@ -50,10 +50,16 @@ export type {
   LoanStatus,
   PoolTransactionType,
   LendingPool,
+  LendingPoolSnapshot,
   LendingTransaction,
   Loan,
+  LoanRepayment,
+  LoanLiquidation,
   LendingPoolFilters,
-  
+  LoanFilters,
+  LoanRepaymentFilters,
+  LoanLiquidationFilters,
+
   // Mutation types
   CreateAccountInput,
   UpdateAccountStatusInput,
@@ -68,6 +74,8 @@ export type {
   SupplyLiquidityInput,
   BorrowAssetInput,
   RepayBorrowInput,
+  CreateLoanRepaymentInput,
+  CreateLoanLiquidationInput,
   MutationAction,
   MutationResponse,
   
