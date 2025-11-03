@@ -6,13 +6,18 @@ A fully-typed TypeScript client for interacting with the Cradle Back-End REST AP
 
 - ✅ Full TypeScript support with comprehensive type definitions
 - ✅ Built with Axios for robust HTTP requests
-- ✅ All API endpoints covered (23 GET endpoints + 1 POST mutations endpoint)
+- ✅ All API endpoints covered (40+ endpoints including lending pools, loans, repayments, and liquidations)
 - ✅ Bearer token authentication
 - ✅ Standardized error handling
 - ✅ Request timeout support
 - ✅ Automatic request/response interceptors
 - ✅ Type-safe mutation operations
 - ✅ Query parameter builders for filtering
+
+## Documentation
+
+- **[Main README](./README.md)** - Getting started and basic usage
+- **[Lending Pools & Loans API](./LENDING_POOLS_API.md)** - Complete documentation for lending pools, loans, repayments, and liquidations
 
 ## Installation
 
@@ -150,12 +155,15 @@ const records = await client.getTimeSeriesRecords({
 // Get lending pool by UUID
 const pool = await client.getLendingPool('pool-uuid');
 
-// Get all lending pools with filters
-const pools = await client.getLendingPools({
-  reserve_asset: 'asset-uuid',
-  min_loan_to_value: 0.5,
-  max_loan_to_value: 0.8,
-});
+// Get all lending pools
+const pools = await client.getLendingPools();
+
+// Get pool by name or address
+const pool = await client.getLendingPoolByName('USDC Lending Pool');
+const pool = await client.getLendingPoolByAddress('0x1234...');
+
+// Get pool snapshot (metrics)
+const snapshot = await client.getPoolSnapshot('pool-uuid');
 
 // Get transactions for a pool
 const transactions = await client.getLendingTransactions('pool-uuid');
@@ -164,9 +172,25 @@ const transactions = await client.getLendingTransactions('pool-uuid');
 const transactions = await client.getLendingTransactionsByWallet('wallet-uuid');
 
 // Get loans
-const loans = await client.getLoans('pool-uuid');
+const allLoans = await client.getAllLoans();
+const loans = await client.getLoansByPool('pool-uuid');
 const loan = await client.getLoan('loan-uuid');
 const walletLoans = await client.getLoansByWallet('wallet-uuid');
+const activeLoans = await client.getLoansByStatus('active');
+
+// Get repayments
+const allRepayments = await client.getAllRepayments();
+const repayments = await client.getRepaymentsByLoan('loan-uuid');
+
+// Get liquidations
+const allLiquidations = await client.getAllLiquidations();
+const liquidations = await client.getLiquidationsByLoan('loan-uuid');
+
+// Get pool contract information
+const interestRates = await client.getPoolInterestRates('pool-uuid');
+const collateralInfo = await client.getPoolCollateralInfo('pool-uuid');
+const poolStats = await client.getPoolStatistics('pool-uuid');
+const userPositions = await client.getUserPositions('pool-uuid', 'wallet-uuid');
 ```
 
 ## Mutations API
