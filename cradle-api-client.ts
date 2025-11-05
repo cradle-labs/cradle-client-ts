@@ -476,6 +476,12 @@ export interface SupplyLiquidityInput {
   amount: number;
 }
 
+export interface WithdrawLiquidityInput {
+  wallet: string,
+  pool: string,
+  amount: number
+}
+
 export interface BorrowAssetInput {
   wallet: string;
   pool: string;
@@ -516,6 +522,7 @@ export type MutationAction =
   | { MarketTimeSeries: { AddRecord: AddTimeSeriesRecordInput } }
   | { Pool: { CreateLendingPool: CreateLendingPoolInput } }
   | { Pool: { SupplyLiquidity: SupplyLiquidityInput } }
+  | { Pool: { WithdrawLiquidity: WithdrawLiquidityInput } }
   | { Pool: { BorrowAsset: BorrowAssetInput } }
   | { Pool: { RepayBorrow: RepayBorrowInput } }
   | { Loans: { CreateRepayment: CreateLoanRepaymentInput } }
@@ -534,6 +541,7 @@ export type MutationResponse =
   | { MarketTimeSeries: { AddRecord: string } }
   | { Pool: { CreateLendingPool: string } }
   | { Pool: { SupplyLiquidity: string } }
+  | { Pool: { WithdrawLiquidity: string } }
   | { Pool: { BorrowAsset: string } }
   | { Pool: { RepayBorrow: null } }
   | { Loans: { CreateRepayment: string } }
@@ -593,6 +601,9 @@ export const MutationResponseHelpers = {
   },
   isSupplyLiquidity(response: MutationResponse): response is { Pool: { SupplyLiquidity: string } } {
     return 'Pool' in response && 'SupplyLiquidity' in response.Pool;
+  },
+  isWithdrawLiquidity(response: MutationResponse): response is { Pool: { WithdrawLiquidity: string } } {
+    return 'Pool' in response && 'WithdrawLiquidity' in response.Pool;
   },
   isBorrowAsset(response: MutationResponse): response is { Pool: { BorrowAsset: string } } {
     return 'Pool' in response && 'BorrowAsset' in response.Pool;
@@ -1169,6 +1180,12 @@ export class CradleApiClient {
   async supplyLiquidity(input: SupplyLiquidityInput): Promise<ApiResponse<MutationResponse>> {
     return this.processMutation({
       Pool: { SupplyLiquidity: input },
+    });
+  }
+
+  async withdrawLiquidity(input: WithdrawLiquidityInput): Promise<ApiResponse<MutationResponse>> {
+    return this.processMutation({
+      Pool: { WithdrawLiquidity: input },
     });
   }
 
