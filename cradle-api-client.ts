@@ -463,7 +463,7 @@ class CradleClient {
       options.axiosInstance ??
       axios.create({
         baseURL: baseUrl,
-        timeout: options.timeoutMs ?? 15000,
+        timeout: options.timeoutMs ?? 180000,
       });
   }
 
