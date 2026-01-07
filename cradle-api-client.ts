@@ -240,6 +240,15 @@ interface OnRampResponse {
   access_code: string;
 }
 
+
+// Pool Oracle Types
+interface PriceOracle {
+  id: UUID,
+  lending_pool_id: UUID,
+  asset_id: UUID,
+  price: Big
+}
+
 // Action Router types
 type AccountsProcessorInput =
   | { CreateAccount: { linked_account_id: string; account_type?: CradleAccountType; status?: CradleAccountStatus } }
@@ -592,6 +601,11 @@ class CradleClient {
 
   getPool(id: UUID): Promise<ApiResponse<LendingPoolRecord>> {
     return this.get(`/pools/${id}`);
+  }
+
+  // get oracle multiplier
+  getMultiplier(pool_id: UUID, asset_id: UUID): Promise<ApiResponse<PriceOracle>> {
+    return this.get(`/oracle/${pool_id}/${asset_id}`)
   }
 
   getLoans(walletId: UUID): Promise<ApiResponse<LoanRecord[]>> {
